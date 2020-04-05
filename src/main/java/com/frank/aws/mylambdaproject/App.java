@@ -14,25 +14,27 @@ import com.google.gson.Gson;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class App implements RequestHandler<S3Event, Dessert> {
+public class App implements RequestHandler<S3Event, String> {
 
     private AmazonS3 amazonS3;
     private String s3BucketName;
     private LambdaLogger logger;
     private String s3FileName;
 
-    public Dessert handleRequest(S3Event event, Context context) {
+    public String handleRequest(S3Event event, Context context) {
         Dessert dessert = null;
+        String response = null;
         initialize(event, context);
         try {
             String jsonString = getStringFromS3Bucket();
             Gson g = new Gson();
             dessert = g.fromJson(jsonString, Dessert.class);
+            response = g.toJson(dessert);
         } catch ( Exception ex ) {
             logStackTrace(ex);
             log("Error happened: " + ex.getMessage());
         }
-        return dessert;
+        return response;
     }
 
     private void initialize(S3Event event, Context context) {

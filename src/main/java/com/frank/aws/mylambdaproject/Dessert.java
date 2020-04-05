@@ -6,11 +6,20 @@ import java.util.List;
 public class Dessert {
 
     private String name;
+    private String phone;
     private List<String> containers = new LinkedList<>();
     private List<String> icecream = new LinkedList<>();
     private List<String> toppings = new LinkedList<>();
 
     public Dessert() {
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Dessert(String value) {

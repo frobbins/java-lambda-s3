@@ -27,15 +27,17 @@ public abstract class BaseApp {
     private Context context;
 
     private String s3BucketName;
+    private String s3FileName;
 
     abstract OutputBean doWork();
 
     public OutputBean handleRequest(S3Event event, Context context) {
-        s3BucketName = System.getenv(ENV_S3_BUCKET_NAME);
+//        s3BucketName = System.getenv(ENV_S3_BUCKET_NAME);
         setContext(context);
         setLogger(context.getLogger());
         S3EventNotification.S3EventNotificationRecord record=event.getRecords().get(0);
         setS3BucketName(record.getS3().getBucket().getName());
+        setS3FileName(record.getS3().getObject().getKey());
         listFiles(getListOfFilesFromS3());
         OutputBean outputBean = doWork();
         return outputBean;
@@ -45,8 +47,20 @@ public abstract class BaseApp {
         s3BucketName = name;
     }
 
+    protected void setS3FileName(String fileName) {
+        s3FileName = fileName;
+    }
+
     protected String getS3BucketName() {
         return s3BucketName;
+    }
+
+    protected String getS3FileName() {
+        return s3FileName;
+    }
+
+    protected LambdaLogger getLambdaLogger() {
+        return logger;
     }
 
     public void setContext(Context context) {
@@ -77,7 +91,7 @@ public abstract class BaseApp {
     protected AmazonS3 getS3Client() {
         if (amazonS3 == null ) {
             amazonS3 = AmazonS3ClientBuilder.standard().
-                    withRegion(Regions.US_EAST_1).
+                    withRegion(Regions.US_EAST_2).
                     build();
         }
         return amazonS3;

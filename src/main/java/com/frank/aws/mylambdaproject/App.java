@@ -8,6 +8,7 @@ public class App extends BaseApp implements RequestHandler<S3Event, OutputBean> 
     @Override
     public OutputBean doWork() {
         OutputBean outputBean;
+        getLambdaLogger().log(getStringFromS3Bucket(getS3FileName()));
         try {
             int fileCount = getListOfFilesFromS3().size();
             outputBean = buildSuccessOutputBean(fileCount);

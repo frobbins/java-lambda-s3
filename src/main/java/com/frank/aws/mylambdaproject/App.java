@@ -9,27 +9,30 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.event.S3EventNotification;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
+import com.google.gson.Gson;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class App implements RequestHandler<S3Event, String> {
+public class App implements RequestHandler<S3Event, Dessert> {
 
     private AmazonS3 amazonS3;
     private String s3BucketName;
     private LambdaLogger logger;
     private String s3FileName;
 
-    public String handleRequest(S3Event event, Context context) {
-        String response = null;
+    public Dessert handleRequest(S3Event event, Context context) {
+        Dessert dessert = null;
         initialize(event, context);
         try {
-            response = getStringFromS3Bucket();
+            String jsonString = getStringFromS3Bucket();
+            Gson g = new Gson();
+            dessert = g.fromJson(jsonString, Dessert.class);
         } catch ( Exception ex ) {
             logStackTrace(ex);
             log("Error happened: " + ex.getMessage());
         }
-        return response;
+        return dessert;
     }
 
     private void initialize(S3Event event, Context context) {

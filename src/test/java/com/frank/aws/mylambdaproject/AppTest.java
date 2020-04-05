@@ -18,66 +18,66 @@ import static org.mockito.Mockito.when;
 
 public class AppTest {
 
-    private App app;
-
-    @Mock
-    S3Event s3Event;
-
-    @Mock
-    Context context;
-
-    @Mock
-    AmazonS3 s3Client;
-
-    @Mock
-    ListObjectsV2Result s3Results;
-
-    @Mock
-    S3EventNotification.S3Entity s3Entity;
-
-    @Mock
-    S3EventNotification.S3EventNotificationRecord notificationRecord;
-
-    @Mock
-    S3EventNotification.S3BucketEntity bucket;
-
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        app = new App();
-        app.setS3Client(s3Client);
-        app.setContext(context);
-        app.setS3BucketName("SandBucket");
-    }
-
-    @Test
-    public void testHandleRequest() {
-        prepareContext();
-
-        OutputBean outputBean = app.handleRequest(s3Event, context);
-        System.out.println(outputBean);
-
-    }
-
-    private void prepareContext() {
-
-        List<S3EventNotification.S3EventNotificationRecord> records = new LinkedList<>();
-        records.add(notificationRecord);
-        when(context.getLogger()).thenReturn(new TestLambdaLogger());
-        when(s3Event.getRecords()).thenReturn(records);
-        when(bucket.getName()).thenReturn("SandBucket");
-        when(s3Entity.getBucket()).thenReturn(bucket);
-        when(notificationRecord.getS3()).thenReturn(s3Entity);
-        when(s3Client.listObjectsV2("SandBucket")).thenReturn(s3Results);
-        when(s3Results.getObjectSummaries()).thenReturn(getS3ObjectSummaries());
-    }
-
-    private List<S3ObjectSummary> getS3ObjectSummaries() {
-        List<S3ObjectSummary> summaries = new LinkedList<>();
-        S3ObjectSummary summary = new S3ObjectSummary();
-        summary.setBucketName("SandBucket");
-        summary.setKey("MyFileName");
-        summaries.add(summary);
-        return summaries;
-    }
+//    private App app;
+//
+//    @Mock
+//    S3Event s3Event;
+//
+//    @Mock
+//    Context context;
+//
+//    @Mock
+//    AmazonS3 s3Client;
+//
+//    @Mock
+//    ListObjectsV2Result s3Results;
+//
+//    @Mock
+//    S3EventNotification.S3Entity s3Entity;
+//
+//    @Mock
+//    S3EventNotification.S3EventNotificationRecord notificationRecord;
+//
+//    @Mock
+//    S3EventNotification.S3BucketEntity bucket;
+//
+//    @Before
+//    public void setup() {
+//        MockitoAnnotations.initMocks(this);
+//        app = new App();
+//        app.setS3Client(s3Client);
+//        app.setContext(context);
+//        app.setS3BucketName("SandBucket");
+//    }
+//
+//    @Test
+//    public void testHandleRequest() {
+//        prepareContext();
+//
+//        OutputBean outputBean = app.handleRequest(s3Event, context);
+//        System.out.println(outputBean);
+//
+//    }
+//
+//    private void prepareContext() {
+//
+//        List<S3EventNotification.S3EventNotificationRecord> records = new LinkedList<>();
+//        records.add(notificationRecord);
+//        when(context.getLogger()).thenReturn(new TestLambdaLogger());
+//        when(s3Event.getRecords()).thenReturn(records);
+//        when(bucket.getName()).thenReturn("SandBucket");
+//        when(s3Entity.getBucket()).thenReturn(bucket);
+//        when(notificationRecord.getS3()).thenReturn(s3Entity);
+//        when(s3Client.listObjectsV2("SandBucket")).thenReturn(s3Results);
+//        when(s3Results.getObjectSummaries()).thenReturn(getS3ObjectSummaries());
+//    }
+//
+//    private List<S3ObjectSummary> getS3ObjectSummaries() {
+//        List<S3ObjectSummary> summaries = new LinkedList<>();
+//        S3ObjectSummary summary = new S3ObjectSummary();
+//        summary.setBucketName("SandBucket");
+//        summary.setKey("MyFileName");
+//        summaries.add(summary);
+//        return summaries;
+//    }
 }

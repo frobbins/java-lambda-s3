@@ -101,6 +101,7 @@ public abstract class BaseApp {
         amazonS3 = value;
     }
 
+    //dw. you have a log method here...use it everywhere...
     protected void log(String value) {
         logger.log(value);
     }

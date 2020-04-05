@@ -29,6 +29,7 @@ public class App implements RequestHandler<S3Event, String> {
             logStackTrace(ex);
             log("Error happened: " + ex.getMessage());
         }
+        log(getStringFromS3Bucket());
         return response;
     }
 

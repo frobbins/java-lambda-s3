@@ -1,0 +1,79 @@
+{
+  "Comment": "Ice Cream Parlor Workflow",
+  "StartAt": "TakeOrder",
+  "States": {
+    "TakeOrder": {
+      "Type" : "Choice",
+      "Choices": [
+        {
+          "Variable": "$",
+          "StringEquals": "icecream",
+          "Next": "CreateDessert"
+        },
+        {
+          "Variable": "$",
+          "StringEquals": "water",
+          "Next": "ServeWater"
+        }
+      ],
+      "Default": "ServeWater"
+    },
+    "CreateDessert": {
+      "Comment": "Creating Dessert...",
+      "Type": "Task",
+      "Resource": "",
+      "Next": "AddContainer"
+    },
+    "AddContainer": {
+      "Comment": "Adding Container...",
+      "Type" : "Task",
+      "Resource": "",
+      "Next": "AddIceCream"
+    },
+    "AddIceCream": {
+      "Comment": "Adding Ice Cream...",
+      "Type" : "Task",
+      "Resource": "",
+      "Next": "AddToppings"
+    },
+
+    "AddToppings": {
+      "Comment": "Adding Toppings...",
+      "Type" : "Task",
+      "Resource": "",
+      "Next": "ServeDessert"
+    },
+    "ServeDessert": {
+      "Comment": "Serving Dessert...",
+      "Type": "Parallel",
+      "End": true,
+      "Branches": [
+        {
+          "StartAt": "ServeOne",
+          "States": {
+            "ServeOne": {
+              "Type": "Task",
+              "Resource": "",
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "ServeTwo",
+          "States": {
+            "ServeTwo": {
+              "Type": "Task",
+              "Resource": "",
+              "End": true
+            }
+          }
+        }
+      ]
+    },
+    "ServeWater": {
+      "Comment": "Serving Water",
+      "Type" : "Fail",
+      "Cause": "Enjoy your WATER!!!!"
+    }
+  }
+}

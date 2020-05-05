@@ -1,0 +1,9 @@
+Resources:
+  Function:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.frank.aws.mylambdaproject.App::handleRequest
+      CodeUri: C:/Users/Dustin/Documents/GitHub/java-lambda-s3
+      Runtime: java8
+      Timeout: 300
+      MemorySize: 128

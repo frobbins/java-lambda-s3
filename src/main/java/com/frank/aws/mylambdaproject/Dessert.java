@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Dessert {
 
+    private String orderType;
     private String name;
     private String phone;
     private List<String> containers = new LinkedList<>();
@@ -20,6 +21,14 @@ public class Dessert {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
     }
 
     public Dessert(String value) {
@@ -58,7 +67,7 @@ public class Dessert {
         this.toppings = value;
     }
 
-    @Override
+//    @Override
     public String toString() {
         return "Dessert{" +
                 "containers='" + containers + '\'' +
